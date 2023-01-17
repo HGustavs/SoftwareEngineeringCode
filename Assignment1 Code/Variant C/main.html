@@ -46,10 +46,71 @@
       var extent = map.zoomToExtent(markers.getDataExtent()); 
     }
   </script>
+
+<style>
+
+body{
+    background:#444;
+    color:#fff;
+    font-family:verdana;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  color:#000;
+  background-color: #bfe;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: #000;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #222;
+  color:#fff;
+}
+
+.active {
+  background-color: #04AA6D;
+  color:#fff;
+}
+
+</style>  
+
 </head>
 
 <body onload="init();">
+
+<ul>
+  <li><a href="#home">Home</a></li>
+  <li><a href="#locator">News</a></li>
+  <li><a href="#options">Locator</a></li>
+  <li style="float:right">
+      <a class="active" href="#about">
+          About
+      </a>
+    </li>
+</ul>
+
+  <h1>Dealership Locator</h1>
+  <p>Do not forget to enable location services to see dealership near your location</p>
+
   <div style="width: 600px; height: 600px;" id="basicMap"></div>
+
+  <p>To send the current list of dealerships scan the QR code below</p>
+  <img src="https://quickchart.io/chart?cht=qr&chs=150x150&chl=http://wwwlab.webug.se" class="qr-code img-thumbnail img-responsive" />
+
 </body>
 
 </html>
