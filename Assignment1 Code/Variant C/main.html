@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>OpenLayers Demo</title>
+  <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+  <script>
+
+    var map=null;
+    var markers=null;
+		
+    function createmarker (lon,lat) {
+				var feature = new OpenLayers.LonLat( lon, lat ) // create features (locations) out of arrays in points
+						.transform(  //transform the location to the coordinate system of our OpenLayers map
+							new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+							map.getProjectionObject() // to Spherical Mercator Projection
+						);
+				markers.addMarker(new OpenLayers.Marker(feature)); // Add new features to markers layer
+		}
+
+    function init() {
+      map = new OpenLayers.Map("basicMap"); //create a new map
+      var mapnik = new OpenLayers.Layer.OSM(); //add an OpenStreetMap layer to have some data in the mapview
+      map.addLayer(mapnik); //add the OSM layer to the map
+
+	    markers = new OpenLayers.Layer.Markers( "Markers" ); //add a layer where markers can be put
+	    map.addLayer(markers); //add the markers layer to the current map
+
+	    var lonLat = new OpenLayers.LonLat( 13.0 ,47.8 ) //define a new location with these coordinates in WGS84
+        .transform(  //transform the location to the coordinate system of our OpenLayers map
+          new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+          map.getProjectionObject() // to Spherical Mercator Projection
+      );
+
+			var poi = [ // create array with point of interests
+			[ 11.557617 ,48.092757 ],
+			[ 8.558350, 50.028917 ],
+			[ 6.701660, 51.289406 ],
+			[ 13.337402, 52.496160 ]
+      ];
+
+			for (var x of poi) { // for each array(object) in array 
+				createmarker (x[0],x[1]) // create markers
+			}
+
+      map.setCenter(lonLat, 15); // Use maker to center the map above and set zoom level to 15
+      var extent = map.zoomToExtent(markers.getDataExtent()); 
+    }
+  </script>
+</head>
+
+<body onload="init();">
+  <div style="width: 600px; height: 600px;" id="basicMap"></div>
+</body>
+
+</html>

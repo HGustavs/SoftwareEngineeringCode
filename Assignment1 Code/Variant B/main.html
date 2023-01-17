@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<style>
+/* Style The Dropdown Button */
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+  background-color: #3e8e41;
+}
+</style>
+</head>
+<body>
+
+<div class="dropdown">
+  <button>Reset</button>
+  <button class="dropbtn">Dropdown</button>
+  <div class="dropdown-content">
+    <a href="#">Link 1</a>
+    <a href="#">Link 2</a>
+    <a href="#">Link 3</a>
+  </div>
+</div> 
+
+<div id="myChart" style="width:100%; max-width:600px; height:500px;"></div>
+
+<script>
+google.charts.load('current',{packages:['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+// Set Data
+var data = google.visualization.arrayToDataTable([
+  ['Price', 'Size'],
+  [50,7],[60,8],[70,8],[80,9],[90,9],
+  [100,9],[110,10],[120,11],
+  [130,14],[140,14],[150,15]
+]);
+// Set Options
+var options = {
+  title: 'House Prices vs. Size',
+  hAxis: {title: 'Square Meters'},
+  vAxis: {title: 'Price in Millions'},
+  legend: 'none'
+};
+// Draw
+var chart = new google.visualization.LineChart(document.getElementById('myChart'));
+chart.draw(data, options);
+}
+</script>
+
+</body>
+</html>
