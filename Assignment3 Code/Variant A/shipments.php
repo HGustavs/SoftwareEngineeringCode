@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Sharp Dressed Label Printer</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -11,6 +11,10 @@
 <style>
 
     li {list-style: none}
+
+    tr {border-bottom:1px solid black;}
+    td {border-left:1px solid black;}
+    table {border:2px solid black;}
 
 </style>
 <body>
@@ -57,13 +61,13 @@
   echo "Customer: <pre>".$rows[0]['name']."</pre>";
 
   echo "<table>";
-  echo "<tr><th></th></tr>";
+  echo "<tr style='color:white;background:black;'><th></th><th>Description</th><th>Cost</th><th>Contents</th><th>Delivered</th></tr>";
   foreach($rows as $row){
-      echo "<tr>";
-      echo "<td>".$row['trackno']."</td>";
+      echo "<tr style='vertical-align:top;'>";
+      echo "<td><a href='label.php?trackno=".$row['trackno']."'>Track</a></td>";
       echo "<td>".$row['description']."</td>";
       echo "<td>".$row['cost']."</td>";
-      echo "<td>".$row['contents']."</td>";
+      echo "<td><pre>".$row['contents']."</pre></td>";
       echo "<td>".$row['delivered']."</td>";
       echo "</tr>";
   }

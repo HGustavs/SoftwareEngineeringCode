@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Sharp Dressed Label Printer</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -68,23 +68,12 @@
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
       <ul class="navbar-nav">
-        <!--
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>  
-        -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Handle Shipments</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Login</a></li>
-            <li><a class="dropdown-item" href="#">Shipments</a></li>
-            <li><a class="dropdown-item" href="#">Rebate Voucher</a></li>
+            <li><a class="dropdown-item" href="login.php">Login</a></li>
+            <li><a class="dropdown-item" href="shipments.php">Shipments</a></li>
+            <li><a class="dropdown-item" href="rebate.php">Rebate Voucher</a></li>
           </ul>
         </li>
       </ul>

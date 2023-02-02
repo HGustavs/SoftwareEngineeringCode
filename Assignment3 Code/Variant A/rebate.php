@@ -10,8 +10,6 @@
 </head>
 <style>
 
-    li {list-style: none}
-
 </style>
 <body>
 
@@ -40,34 +38,21 @@
   <h3>Shipments</h3>
   <p>Show Shipments</p>
 
-  <div class="shipments">
+  <div class="rebate">
 
-  <form method="POST" action="login.php" >
-      <div>Login: <input type="text" name="email" placeholder="email"></div>
-      <div>Password: <input type="text" name="passw" placeholder="passw"></div>
-      <div><input type="submit" value="submit"></div>
-  </form>
-  <form method="POST" action="login.php" >
-      <div><input type="submit" value="logout"></div>
-  </form>
 <?php
 
   session_start();
+  $email=$_SESSION['email'];
 
-  if(isset($_POST['email'])){
-    	$log_db = new PDO('sqlite:./tracking.db');
-    	$str="SELECT * FROM customer WHERE customer.email=:email;";
-    	$query = $log_db->prepare($str);
-      $query->bindParam(':email', $_POST['email']);
-      $query->execute();
-    	$rows = $query->fetchAll(PDO::FETCH_ASSOC);  
+	$log_db = new PDO('sqlite:./tracking.db');
+	$str="SELECT customer.name,customer.id,count(*) as cnt FROM customer join shipment ON customer.id=shipment.custid WHERE customer.email=:email GROUP BY customer.id;";
+	$query = $log_db->prepare($str);
+  $query->bindParam(':email', $email);
+  $query->execute();
+	$rows = $query->fetchAll(PDO::FETCH_ASSOC);
 
-      foreach($rows as $row){
-          $_SESSION['email']=$_POST['email'];
-      }
-  }else{
-      unset($_SESSION['email']);
-  }
+  echo "Customer: ".$rows[0]['name']." Rebate Code: C".$rows[0]['id']."REB".($rows[0]['cnt']*5)."%";
 
 ?>
 
