@@ -1,20 +1,23 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html>
 <head>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
+<title>Elsidan</title>
 <style>
 
 /* Style The Dropdown Button */
 .dropbtn {
   font-family:arial narrow;
-  margin-top:4px;
   background-color: #AF4C50;
   color: white;
-  padding: 16px;
+  padding: 12px;
   font-size: 16px;
   border: none;
   cursor: pointer;
+  height:52px;
+  margin-top:4px;
+  margin-left:4px;
+  width:80px;
 }
 
 /* The container <div> - needed to position the dropdown content */
@@ -25,7 +28,9 @@
   top:0px;
   height:60px;
   background:#035;
-  display: inline-block;
+  display: flex;
+  align-items: top;
+  justify-content: left;  
 }
 
 /* Dropdown Content (Hidden by Default) */
@@ -37,13 +42,13 @@
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 500;
   margin:0px;
-  left:80px;
+  left:140px;
+  top:50px;
 }
 
 /* Links inside the dropdown */
 .dropdown-content a {
   color: black;
-  padding: 12px 16px;
   text-decoration: none;
   display: block;
   margin:8px;
@@ -90,14 +95,17 @@
 <body style="margin-top:80px;font-family:arial narrow;">
 
 <div class="dropdown">
-    <span style="color:white;margin:8px;" class="logotyp">Elsidan</span>
-    <button class="dropbtn">Settings</button>
+    <?php session_start(); ?>
+    <img src="icon.svg" style="width:52px;">
+    <a href="settings.php"><button class="dropbtn">Settings</button></a>
     <button class="dropbtn">Period</button>
     <div class="dropdown-content">
-      <a href="#">Daily</a>
-      <a href="#">Monthly</a>
+      <a href="consumption.php?<?php echo "year=".$_SESSION['year']."&month=".$_SESSION['month']; ?>">Daily</a>
+      <a href="consumption.php?monthly=true<?php echo "&year=".$_SESSION['year']; ?>">Monthly</a>
     </div>
-  </div> 
+    <a href="login.php"><button class="dropbtn">Login</button></a>
+    <a href="logout.php"><button class="dropbtn">Logout</button></a>        
+</div> 
 
 <h1>Electricity Usage</h1>
 
@@ -108,21 +116,35 @@
   <?php  
       $months=["Januari","Februari","Mars","April","Maj","Juni","Juli","Augusti","September","Oktober","November","December"];
 
-      echo "<a href='consumption.php?year=".$_GET['year']."&month=".($_GET['month']-1)."'>";
       echo "&#5130;";
-      echo $months[($_GET['month']-2)%12];
+      if(isset($_GET['monthly'])){
+          echo "<a href='consumption.php?year=".($_GET['year']-1)."&monthly=true'>";
+          echo $_GET['year']-1; 
+      }else{
+          echo "<a href='consumption.php?year=".$_GET['year']."&month=".($_GET['month']-1)."'>";
+          echo $months[($_GET['month']-2)%12];
+      }
       echo "</a>";
   ?>
   </div>
   <div class="item3" id="myChart" style="width:100%; height:500px;"></div>
   <div class="item5">
   <?php  
-      echo "<a href='consumption.php?year=".$_GET['year']."&month=".($_GET['month']+1)."'>";
-      echo $months[($_GET['month'])%12];
+      if(isset($_GET['monthly'])){
+          echo "<a href='consumption.php?year=".($_GET['year']+1)."&monthly=true'>";
+          echo $_GET['year']+1;      
+      }else{
+          echo "<a href='consumption.php?year=".$_GET['year']."&month=".($_GET['month']+1)."'>";
+          echo $months[($_GET['month'])%12];
+      }
       echo "</a>";  ?>
   &#5125;
   </div>
-  <div class="item6">Footer</div>
+  <div class="item6">
+    Electricity <?php
+    echo $_SESSION['chart'];
+    ?>Chart
+  </div>
 </div>
 
 <script>
@@ -161,7 +183,7 @@ var data = google.visualization.arrayToDataTable([
               foreach($price as $val){$priceavg+=$val;}
               $priceavg=$priceavg/count($price);
 
-              echo ",[".$row['cmonth'].",".($priceavg*100).",".$consumptiontotal."]";
+              echo ",['".$months[$row['cmonth']-1]."',".($priceavg*100).",".$consumptiontotal."]";
           }      
       }else{
           foreach($rows as $row){
@@ -179,15 +201,25 @@ var data = google.visualization.arrayToDataTable([
 // Set Options
 var options = {
   title: 'Electricity Usage <?php  
-      $months=["Januari","Februari","Mars","April","Maj","Juni","Juli","Augusti","September","Oktober","November","December"];
-      echo $months[$_GET['month']-1]." ".$_GET['year'];     
+      if(isset($_GET['month'])) echo $months[$_GET['month']-1]." ";
+      echo $_GET['year'];     
   ?>',
   hAxis: {title: 'Date'},
   vAxis: {title: 'kWh'},
   legend: 'kWh'
 };
 // Draw
-var chart = new google.visualization.LineChart(document.getElementById('myChart'));
+var chart = new google.visualization.<?php 
+    if(isset($_SESSION['chart'])){
+        if($_SESSION['chart']=='bar'){
+            echo "Column";
+        }else{
+            echo "Line";
+        } 
+    }else{
+        echo "Line";
+    }
+    ?>Chart(document.getElementById('myChart'));
 chart.draw(data, options);
 }
 </script>

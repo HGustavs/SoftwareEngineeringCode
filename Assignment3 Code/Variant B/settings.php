@@ -93,8 +93,16 @@
 </head>
 <body style="margin-top:80px;font-family:arial narrow;">
 
+<?php
+  session_start();
+  if(isset($_POST['year'])){
+      $_SESSION['chart']=$_POST['chart'];
+      $_SESSION['year']=$_POST['year'];
+      $_SESSION['month']=$_POST['month'];
+  }
+?>
+
 <div class="dropdown">
-    <?php session_start(); ?>
     <img src="icon.svg" style="width:52px;">
     <a href="settings.php"><button class="dropbtn">Settings</button></a>
     <button class="dropbtn">Period</button>
@@ -106,34 +114,13 @@
     <a href="logout.php"><button class="dropbtn">Logout</button></a>        
 </div> 
 
-  <h3>Login Page</h3>
-  
-  <form method="POST" action="login.php" >
-      <div>Login: <input type="text" name="email" placeholder="email"></div>
-      <div>Password: <input type="text" name="passw" placeholder="passw"></div>
-      <div><input type="submit" value="submit"></div>
+  <form method="POST" action="settings.php" >
+      <div>Bar Chart: <input type="radio" name="chart" value="bar"></div>
+      <div>Line Chart: <input type="radio" name="chart" checked value="line"></div>
+      <div>Month: <select name='month'><option value='1'>Januari</option><option value='2'>Februari</option><option value='3'>Mars</option><option value='4'>April</option><option value='5'>Maj</option><option value='6'>Juni</option><option value='7'>Juli</option><option value='8'>Augusi</option><option value='9'>September</option><option value='10'>Oktober</option><option value='11'>November</option><option value='12'>December</option></select></div>
+      <div>Year: <select name='year'><option>2021</option><option>2022</option><option>2023</option></select>
+      <div><input type="submit" value="Save"></div>
   </form>
-  <form method="POST" action="login.php" >
-      <div><input type="submit" value="logout"></div>
-  </form>
-
-<?php
-
-  if(isset($_POST['email'])){
-    	$log_db = new PDO('sqlite:./electric.db');
-    	$str="SELECT * FROM customer WHERE customer.email=:email;";
-    	$query = $log_db->prepare($str);
-      $query->bindParam(':email', $_POST['email']);
-      $query->execute();
-    	$rows = $query->fetchAll(PDO::FETCH_ASSOC);  
-
-      foreach($rows as $row){
-          $_SESSION['email']=$_POST['email'];
-          $_SESSION['passw']=$_POST['passw'];
-      }
-  }
-
-?>
 
 </div>
 
