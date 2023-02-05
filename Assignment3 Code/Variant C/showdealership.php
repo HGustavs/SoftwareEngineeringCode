@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Car Dealership Locator</title>
+  <title>OpenLayers Demo</title>
   <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
   <script>
 
@@ -61,7 +61,8 @@ ul {
   padding: 0;
   overflow: hidden;
   color:#000;
-  background-color: #bfe;
+  background-color: #689;
+  background-color: #10CC8D;
 }
 
 li {
@@ -97,8 +98,7 @@ li a:hover:not(.active) {
 <body onload="init();">
 
 <ul>
-  <li><img src="Icon.svg"></li>
-  <li><a class="item1" href="#home">Home</a></li>
+  <li><img style="width:40px;margin-left:4px;margin-top:4px;" src="Icon.svg"></li>
   <li><a class="item2" href="#locator">News</a></li>
   <li><a class="item3" href="#options">Locator</a></li>
   <li class="item4" style="float:right">
