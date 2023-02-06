@@ -1,5 +1,5 @@
 <?php
 
-unlink("./electric.db");
+unlink("./dealer.db");
 
 ?>

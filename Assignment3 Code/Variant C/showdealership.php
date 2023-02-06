@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>OpenLayers Demo</title>
+  <title>Dealership Locator</title>
   <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
   <script>
 
@@ -32,10 +32,23 @@
       );
 
 			var poi = [ // create array with point of interests
-			[ 11.557617 ,48.092757 ],
-			[ 8.558350, 50.028917 ],
-			[ 6.701660, 51.289406 ],
-			[ 13.337402, 52.496160 ]
+      <?php
+          	$log_db = new PDO('sqlite:./dealer.db');
+
+            $brand=$_POST['brand'];
+
+            $str = "SELECT * FROM dealership WHERE brand=:brand;";
+          	$query = $log_db->prepare($str);
+            $query->bindParam(':brand', $brand);
+            $query->execute();
+          	$rows = $query->fetchAll(PDO::FETCH_ASSOC);
+
+            $i=0;
+            foreach($rows as $row){
+                if($i++>0) echo ",";
+                echo "[".$row['latitude'].",".$row['longitude']."]";
+            }      
+      ?>
       ];
 
 			for (var x of poi) { // for each array(object) in array 
@@ -102,14 +115,25 @@ li a:hover:not(.active) {
   <li><a class="item2" href="#locator">News</a></li>
   <li><a class="item3" href="#options">Locator</a></li>
   <li class="item4" style="float:right">
-      <a class="active" href="#about">
-          About
-      </a>
+      <a class="active" href="manage.php">Manage</a>
     </li>
 </ul>
 
-  <h1>Dealership Locator</h1>
-  <p>Do not forget to enable location services to see dealership near your location</p>
+  <form method="POST" action="showdealership.php"><select name='brand' onchange="this.form.submit()"><option>Select a brand</option>
+  <?php
+    	$str="SELECT DISTINCT(brand) FROM dealership;";
+    	$query = $log_db->prepare($str);
+      $query->execute();
+    	$rows = $query->fetchAll(PDO::FETCH_ASSOC);
+
+      foreach($rows as $row){
+          echo "<option>".$row['brand']."</option>";
+      }
+  ?>
+  </select></form>
+
+  <h1>Dealership Locator for <?php echo $_POST['brand']; ?></h1>
+  <p>Do not forget to enable location services to see dealership near your location (currently not working)</p>
 
   <div style="width: 600px; height: 600px;" id="basicMap"></div>
 
