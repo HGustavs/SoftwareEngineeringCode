@@ -9,7 +9,7 @@
     var markers=null;
 		
     function createmarker (lon,lat) {
-				var feature = new OpenLayers.LonLat( lon, lat ) // create features (locations) out of arrays in points
+				var feature = new OpenLayers.LonLat( lon, lat ) // create features (locations) out of arrays in points 
 						.transform(  //transform the location to the coordinate system of our OpenLayers map
 							new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
 							map.getProjectionObject() // to Spherical Mercator Projection
