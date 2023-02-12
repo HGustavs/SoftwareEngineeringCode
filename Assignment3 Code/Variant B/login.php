@@ -95,7 +95,7 @@
 
 <div class="dropdown">
     <?php session_start(); ?>
-    <img src="icon.svg" style="width:52px;">
+    <img src="Icon.svg" style="width:52px;">
     <a href="settings.php"><button class="dropbtn">Settings</button></a>
     <button class="dropbtn">Period</button>
     <div class="dropdown-content">
