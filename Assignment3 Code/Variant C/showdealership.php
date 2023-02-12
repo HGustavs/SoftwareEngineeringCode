@@ -2,7 +2,8 @@
 <html>
 <head>
   <title>Dealership Locator</title>
-  <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+  <script src="https://openlayers.org/api/2.13.1/OpenLayers.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.2.2/ol.css">
   <script>
 
     var map=null;
